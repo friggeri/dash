@@ -1,0 +1,59 @@
+WHITESPACE = _{ " " | "\t" | "\n" }
+
+workout =  { SOI ~ (warmup_step ~ "+" )? ~ interval_blocks ~ ( "+" ~ cooldown_step )? ~ EOI }
+
+warmup_step = { workout_step ~ "warmup"}
+
+cooldown_step = { workout_step ~ "cooldown" }
+
+interval_blocks = { interval_block ~ ( "+" ~ !cooldown_step ~ interval_block )* }
+
+interval_block = { interval_step | number ~ "x" ~ "(" ~ interval_reps ~ ")" }
+
+interval_reps = { interval_step ~ ( "+" ~ interval_step )* }
+
+interval_step = { workout_step ~ recovery? }
+
+recovery = { "recovery" }
+
+workout_step = { goal ~ ( "@" ~ alert )? }
+
+alert = _{ heart_rate_alert | pace_threshold_alert | pace_range_alert }
+
+heart_rate_alert = { z1 | z2 | z3 | z4 | z5 }
+
+z1 = { "z1" }
+z2 = { "z2" }
+z3 = { "z3" }
+z4 = { "z4" }
+z5 = { "z5" }
+
+pace_threshold_alert = { pace }
+
+pace_range_alert = { pace ~ "-" ~ pace }
+
+pace = { pace_time ~ "/" ~ unit_length }
+
+pace_time = @{ ASCII_DIGIT+ ~ ":" ~ ASCII_DIGIT{2} }
+
+goal = _{ distance_goal | duration_goal }
+
+distance_goal = { number ~ unit_length }
+
+duration_goal = { number ~ unit_duration }
+
+unit_length = _{ miles | yards | feet | meter | kilometer }
+
+miles = { "miles" | "mile" | "mi" }
+yards = { "yards" | "yard" | "yd" }
+feet = { "feet" | "foot" | "ft" }
+meter = { "meters" | "meter" | "m" }
+kilometer = { "kilometers" | "kilometer" | "km" }
+
+unit_duration = _{ seconds | minutes | hours }
+
+seconds = { "sec" | "seconds" | "second" }
+minutes = { "min" | "minutes" | "minute" }
+hours = { "hr" | "hours" | "hour" }
+
+number = @{ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? }

@@ -73,11 +73,11 @@ mod ffi {
     }
 
     extern "Rust" {
-        fn parse_workout_swift(input: &str) -> Result<Workout, String>;
+        fn parse(input: &str) -> Result<Workout, String>;
     }
 }
 
-pub fn parse_workout_swift(input: &str) -> Result<ffi::Workout, String> {
+pub fn parse(input: &str) -> Result<ffi::Workout, String> {
     parse_workout(input).map_err(|e| e.to_string())
 }
 

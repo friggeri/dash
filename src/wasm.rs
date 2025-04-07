@@ -75,7 +75,7 @@ pub enum TimeUnit {
 }
 
 #[wasm_bindgen(unchecked_return_type = "Workout")]
-pub fn parse_workout_wasm(input: &str) -> Result<Workout, JsValue> {
+pub fn parse(input: &str) -> Result<Workout, JsValue> {
     match parse_workout(input) {
         Ok(workout) => Ok(workout),
         Err(e) => Err(JsValue::from_str(&format!("Parsing error: {}", e))),

@@ -157,3 +157,46 @@ impl std::fmt::Debug for Pace {
         )
     }
 }
+
+impl PartialEq for HeartRateZone {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (HeartRateZone::Z1, HeartRateZone::Z1) => true,
+            (HeartRateZone::Z2, HeartRateZone::Z2) => true,
+            (HeartRateZone::Z3, HeartRateZone::Z3) => true,
+            (HeartRateZone::Z4, HeartRateZone::Z4) => true,
+            (HeartRateZone::Z5, HeartRateZone::Z5) => true,
+            _ => false,
+        }
+    }
+}
+
+impl PartialEq for Pace {
+    fn eq(&self, other: &Self) -> bool {
+        self.time == other.time && self.unit == other.unit
+    }
+}
+
+impl PartialEq for LengthUnit {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (LengthUnit::Miles, LengthUnit::Miles) => true,
+            (LengthUnit::Yards, LengthUnit::Yards) => true,
+            (LengthUnit::Feet, LengthUnit::Feet) => true,
+            (LengthUnit::Meters, LengthUnit::Meters) => true,
+            (LengthUnit::Kilometers, LengthUnit::Kilometers) => true,
+            _ => false,
+        }
+    }
+}
+
+impl PartialEq for TimeUnit {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (TimeUnit::Seconds, TimeUnit::Seconds) => true,
+            (TimeUnit::Minutes, TimeUnit::Minutes) => true,
+            (TimeUnit::Hours, TimeUnit::Hours) => true,
+            _ => false,
+        }
+    }
+}

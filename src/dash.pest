@@ -18,7 +18,7 @@ recovery = { "recovery" }
 
 workout_step = { goal ~ ( "@" ~ alert )? }
 
-alert = _{ heart_rate_alert | pace_threshold_alert | pace_range_alert }
+alert = _{ heart_rate_alert | pace_range_alert | pace_threshold_alert }
 
 heart_rate_alert = { z1 | z2 | z3 | z4 | z5 }
 
@@ -30,13 +30,13 @@ z5 = { "z5" }
 
 pace_threshold_alert = { pace }
 
-pace_range_alert = { pace ~ "-" ~ pace }
+pace_range_alert = { pace_time ~ "-" ~ pace_time ~ "/" ~ unit_length }
 
 pace = { pace_time ~ "/" ~ unit_length }
 
 pace_time = @{ ASCII_DIGIT+ ~ ":" ~ ASCII_DIGIT{2} }
 
-goal = _{ distance_goal | duration_goal }
+goal = _{ duration_goal | distance_goal }
 
 distance_goal = { number ~ unit_length }
 
@@ -52,8 +52,8 @@ kilometer = { "kilometers" | "kilometer" | "km" }
 
 unit_duration = _{ seconds | minutes | hours }
 
-seconds = { "sec" | "seconds" | "second" }
-minutes = { "min" | "minutes" | "minute" }
-hours = { "hr" | "hours" | "hour" }
+seconds = { "seconds" | "second" | "sec" }
+minutes = { "minutes" | "minute" | "min" }
+hours = { "hours" | "hour" | "hr" }
 
 number = @{ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? }

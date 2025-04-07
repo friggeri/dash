@@ -30,7 +30,7 @@ pub struct WorkoutStep {
     pub alert: Option<Alert>,
 }
 
-#[derive(Serialize, Debug, Clone, Tsify)]
+#[derive(Serialize, Debug, Clone, Tsify, PartialEq)]
 pub enum Goal {
     Distance { value: f64, unit: LengthUnit },
     Duration { value: f64, unit: TimeUnit },
@@ -43,7 +43,7 @@ pub enum Alert {
     PaceRange { min: Pace, max: Pace },
 }
 
-#[derive(Serialize, Debug, Clone, Tsify)]
+#[derive(Serialize, Debug, Copy, Clone, Tsify, PartialEq, Eq)]
 pub enum HeartRateZone {
     Z1,
     Z2,
@@ -58,7 +58,7 @@ pub struct Pace {
     pub unit: LengthUnit,
 }
 
-#[derive(Serialize, Debug, Clone, Tsify)]
+#[derive(Serialize, Debug, Copy, Clone, Tsify, PartialEq, Eq)]
 pub enum LengthUnit {
     Miles,
     Yards,
@@ -67,7 +67,7 @@ pub enum LengthUnit {
     Kilometers,
 }
 
-#[derive(Serialize, Debug, Clone, Tsify)]
+#[derive(Serialize, Debug, Copy, Clone, Tsify, PartialEq, Eq)]
 pub enum TimeUnit {
     Seconds,
     Minutes,

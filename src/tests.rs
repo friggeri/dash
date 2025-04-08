@@ -1,6 +1,8 @@
+use wasm_bindgen_test::*;
+
 use super::*;
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout() {
     let input = "1 mile warmup + 3 x (0.5 miles @z3 + 1 mile recovery) + 0.5 miles cooldown";
     let result = parse_workout(input);
@@ -25,7 +27,7 @@ fn test_parse_workout() {
     assert!(interval.steps[1].has_recovery);
 }
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_without_warmup_cooldown() {
     let input = "3 x (0.5 miles @z3 + 1 mile recovery)";
     let result = parse_workout(input);
@@ -37,7 +39,7 @@ fn test_parse_workout_without_warmup_cooldown() {
     assert!(workout.cooldown.is_none());
 }
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_duration_goal() {
     let input =
         "30 minutes warmup + 3 x (5 minutes @z4 + 2 minutes recovery) + 15 minutes cooldown";
@@ -55,7 +57,7 @@ fn test_parse_workout_with_duration_goal() {
     }
 }
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_pace_threshold() {
     let input = "1 mile @7:30/mile";
     let result = parse_workout(input);
@@ -72,7 +74,7 @@ fn test_parse_workout_with_pace_threshold() {
     }
 }
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_pace_range() {
     let input = "1 mile @7:30-8:00/mile";
     let result = parse_workout(input);
@@ -91,7 +93,7 @@ fn test_parse_workout_with_pace_range() {
     }
 }
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_all_heart_rate_zones() {
     let input = "1 mile @z1 + 1 mile @z2 + 1 mile @z3 + 1 mile @z4 + 1 mile @z5";
     let result = parse_workout(input);
@@ -116,7 +118,7 @@ fn test_parse_workout_with_all_heart_rate_zones() {
     }
 }
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_different_length_units() {
     let input = "1 mile + 1000 meters + 100 yards + 1000 feet + 1 kilometer";
     let result = parse_workout(input);
@@ -141,7 +143,7 @@ fn test_parse_workout_with_different_length_units() {
     }
 }
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_different_time_units() {
     let input = "30 seconds + 5 minutes + 1 hour";
     let result = parse_workout(input);
@@ -160,7 +162,7 @@ fn test_parse_workout_with_different_time_units() {
     }
 }
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_multiple_intervals() {
     let input = "1 mile warmup + 3 x (0.5 miles @z3 + 1 mile recovery) + 2 x (1 mile @z4) + 0.5 miles cooldown";
     let result = parse_workout(input);
@@ -188,7 +190,7 @@ fn test_parse_workout_with_multiple_intervals() {
     }
 }
 
-#[test]
+#[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_invalid_input() {
     let invalid_inputs = [
         "",                            // Empty string

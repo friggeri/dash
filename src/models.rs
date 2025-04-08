@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde::Serialize;
 
 #[cfg(feature = "wasm")]
@@ -9,7 +11,7 @@ use uniffi;
 #[derive(Serialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
-#[cfg_attr(feature = "wasm", derive(tsify(into_wasm_abi)))]
+#[cfg_attr(feature = "wasm", tsify(into_wasm_abi))]
 pub struct Workout {
     pub warmup: Option<WorkoutStep>,
     pub intervals: Vec<IntervalBlock>,
@@ -43,6 +45,7 @@ pub struct WorkoutStep {
 #[derive(Serialize, Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
+#[serde(tag = "type", rename_all = "camelCase")]
 pub enum Goal {
     Distance { value: f64, unit: LengthUnit },
     Duration { value: f64, unit: TimeUnit },
@@ -51,15 +54,17 @@ pub enum Goal {
 #[derive(Serialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
+#[serde(tag = "type", rename_all = "camelCase")]
 pub enum Alert {
     HeartRate(HeartRateZone),
     PaceThreshold(Pace),
     PaceRange { min: Pace, max: Pace },
 }
 
-#[derive(Serialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Debug, Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
+#[serde(rename_all = "camelCase")]
 pub enum HeartRateZone {
     Z1,
     Z2,
@@ -79,6 +84,7 @@ pub struct Pace {
 #[derive(Serialize, Debug, Copy, Clone, PartialEq)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
+#[serde(rename_all = "camelCase")]
 pub enum LengthUnit {
     Miles,
     Yards,
@@ -90,8 +96,17 @@ pub enum LengthUnit {
 #[derive(Serialize, Debug, Copy, Clone, PartialEq)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
+#[serde(rename_all = "camelCase")]
 pub enum TimeUnit {
     Seconds,
     Minutes,
     Hours,
+}
+
+#[derive(Serialize, Debug, Clone)]
+#[cfg_attr(feature = "ios", derive(uniffi::Record))]
+#[cfg_attr(feature = "wasm", derive(Tsify))]
+pub struct PaceMap {
+    zones: HashMap<HeartRateZone, Pace>,
+    default: HeartRateZone,
 }

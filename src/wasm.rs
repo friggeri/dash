@@ -1,6 +1,5 @@
+use crate::models;
 use crate::parse_workout;
-use serde::Serialize;
-use tsify::Tsify;
 
 use wasm_bindgen::prelude::*;
 

@@ -23,4 +23,4 @@ xcodebuild -create-xcframework \
 rm -rf ./bindings
 
 # build wasm library
-wasm-pack build --target bundler --scope adrien --release --out-dir wasm
+wasm-pack build --target bundler --scope adrien --release --out-dir wasm -- --features wasm

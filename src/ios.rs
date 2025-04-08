@@ -50,7 +50,6 @@ mod ffi {
     }
 
     #[swift_bridge(swift_repr = "struct")]
-
     pub struct Pace {
         pub time: u32, // Time in seconds
         pub unit: LengthUnit,

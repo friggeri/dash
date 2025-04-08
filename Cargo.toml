@@ -2,6 +2,9 @@
 name = "dash"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/friggeri/dash"
+license = "MIT"
+authors = ["Adrien Friggeri <adrien@friggeri.net>"]
 
 [lib]
 crate-type = ["cdylib", "rlib", "staticlib"]
@@ -22,3 +25,4 @@ swift-bridge = "0.1"
 
 [dev-dependencies]
 swift-bridge-cli = "0.1"
+wasm-bindgen-test = "0.3.50"

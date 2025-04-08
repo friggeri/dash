@@ -1,16 +1,19 @@
 use pest::Parser;
 use pest_derive::Parser;
 
-#[cfg(target_vendor = "apple")]
+mod models;
+use models::*;
+
+#[cfg(feature = "ios")]
 mod ios;
 
-#[cfg(target_vendor = "apple")]
+#[cfg(feature = "ios")]
 pub use ios::*;
 
-#[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
+#[cfg(feature = "wasm")]
 mod wasm;
 
-#[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
+#[cfg(feature = "wasm")]
 pub use wasm::*;
 
 #[derive(Parser)]

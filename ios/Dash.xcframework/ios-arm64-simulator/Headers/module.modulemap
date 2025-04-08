@@ -1,0 +1,4 @@
+module dashFFI {
+    header "dashFFI.h"
+    export *
+}

@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug uniffi-bindgen",
+      "cargo": {
+        "args": ["build", "--features", "ios", "--bin", "uniffi-bindgen"],
+        "filter": {
+          "name": "uniffi-bindgen",
+          "kind": "bin"
+        }
+      },
+      "args": [
+        "generate",
+        "--library",
+        "./target/debug/libdash.dylib",
+        "--language",
+        "swift",
+        "--out-dir",
+        "./bindings"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "RUST_BACKTRACE": "1"
+      }
+    }
+  ]
+}

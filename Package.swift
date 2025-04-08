@@ -10,12 +10,14 @@ let package = Package(
 	dependencies: [],
 	targets: [
 		.binaryTarget(
-			name: "RustXcframework",
-			path: "RustXcframework.xcframework"
+			name: "Dash.xcframework",
+			path: "ios/Dash.xcframework"
 		),
 		.target(
 			name: "Dash",
-			dependencies: ["RustXcframework"])
+			dependencies: ["Dash.xcframework"],
+			path: "ios"
+		)
 	]
 )
 	

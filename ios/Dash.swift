@@ -635,13 +635,83 @@ public func FfiConverterTypeIntervalStep_lower(_ value: IntervalStep) -> RustBuf
 }
 
 
+public struct Mileage {
+    public var min: Double
+    public var max: Double
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(min: Double, max: Double) {
+        self.min = min
+        self.max = max
+    }
+}
+
+#if compiler(>=6)
+extension Mileage: Sendable {}
+#endif
+
+
+extension Mileage: Equatable, Hashable {
+    public static func ==(lhs: Mileage, rhs: Mileage) -> Bool {
+        if lhs.min != rhs.min {
+            return false
+        }
+        if lhs.max != rhs.max {
+            return false
+        }
+        return true
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(min)
+        hasher.combine(max)
+    }
+}
+
+
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
+public struct FfiConverterTypeMileage: FfiConverterRustBuffer {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Mileage {
+        return
+            try Mileage(
+                min: FfiConverterDouble.read(from: &buf), 
+                max: FfiConverterDouble.read(from: &buf)
+        )
+    }
+
+    public static func write(_ value: Mileage, into buf: inout [UInt8]) {
+        FfiConverterDouble.write(value.min, into: &buf)
+        FfiConverterDouble.write(value.max, into: &buf)
+    }
+}
+
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
+public func FfiConverterTypeMileage_lift(_ buf: RustBuffer) throws -> Mileage {
+    return try FfiConverterTypeMileage.lift(buf)
+}
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
+public func FfiConverterTypeMileage_lower(_ value: Mileage) -> RustBuffer {
+    return FfiConverterTypeMileage.lower(value)
+}
+
+
 public struct Pace {
-    public var time: UInt32
+    public var time: Double
     public var unit: LengthUnit
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(time: UInt32, unit: LengthUnit) {
+    public init(time: Double, unit: LengthUnit) {
         self.time = time
         self.unit = unit
     }
@@ -678,13 +748,13 @@ public struct FfiConverterTypePace: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Pace {
         return
             try Pace(
-                time: FfiConverterUInt32.read(from: &buf), 
+                time: FfiConverterDouble.read(from: &buf), 
                 unit: FfiConverterTypeLengthUnit.read(from: &buf)
         )
     }
 
     public static func write(_ value: Pace, into buf: inout [UInt8]) {
-        FfiConverterUInt32.write(value.time, into: &buf)
+        FfiConverterDouble.write(value.time, into: &buf)
         FfiConverterTypeLengthUnit.write(value.unit, into: &buf)
     }
 }
@@ -706,12 +776,12 @@ public func FfiConverterTypePace_lower(_ value: Pace) -> RustBuffer {
 
 
 public struct PaceMap {
-    public var zones: [HeartRateZone: Pace]
+    public var zones: [HeartRateZone: PaceRange]
     public var `default`: HeartRateZone
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(zones: [HeartRateZone: Pace], `default`: HeartRateZone) {
+    public init(zones: [HeartRateZone: PaceRange], `default`: HeartRateZone) {
         self.zones = zones
         self.`default` = `default`
     }
@@ -748,13 +818,13 @@ public struct FfiConverterTypePaceMap: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> PaceMap {
         return
             try PaceMap(
-                zones: FfiConverterDictionaryTypeHeartRateZoneTypePace.read(from: &buf), 
+                zones: FfiConverterDictionaryTypeHeartRateZoneTypePaceRange.read(from: &buf), 
                 default: FfiConverterTypeHeartRateZone.read(from: &buf)
         )
     }
 
     public static func write(_ value: PaceMap, into buf: inout [UInt8]) {
-        FfiConverterDictionaryTypeHeartRateZoneTypePace.write(value.zones, into: &buf)
+        FfiConverterDictionaryTypeHeartRateZoneTypePaceRange.write(value.zones, into: &buf)
         FfiConverterTypeHeartRateZone.write(value.`default`, into: &buf)
     }
 }
@@ -772,6 +842,76 @@ public func FfiConverterTypePaceMap_lift(_ buf: RustBuffer) throws -> PaceMap {
 #endif
 public func FfiConverterTypePaceMap_lower(_ value: PaceMap) -> RustBuffer {
     return FfiConverterTypePaceMap.lower(value)
+}
+
+
+public struct PaceRange {
+    public var min: Pace
+    public var max: Pace
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(min: Pace, max: Pace) {
+        self.min = min
+        self.max = max
+    }
+}
+
+#if compiler(>=6)
+extension PaceRange: Sendable {}
+#endif
+
+
+extension PaceRange: Equatable, Hashable {
+    public static func ==(lhs: PaceRange, rhs: PaceRange) -> Bool {
+        if lhs.min != rhs.min {
+            return false
+        }
+        if lhs.max != rhs.max {
+            return false
+        }
+        return true
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(min)
+        hasher.combine(max)
+    }
+}
+
+
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
+public struct FfiConverterTypePaceRange: FfiConverterRustBuffer {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> PaceRange {
+        return
+            try PaceRange(
+                min: FfiConverterTypePace.read(from: &buf), 
+                max: FfiConverterTypePace.read(from: &buf)
+        )
+    }
+
+    public static func write(_ value: PaceRange, into buf: inout [UInt8]) {
+        FfiConverterTypePace.write(value.min, into: &buf)
+        FfiConverterTypePace.write(value.max, into: &buf)
+    }
+}
+
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
+public func FfiConverterTypePaceRange_lift(_ buf: RustBuffer) throws -> PaceRange {
+    return try FfiConverterTypePaceRange.lift(buf)
+}
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
+public func FfiConverterTypePaceRange_lower(_ value: PaceRange) -> RustBuffer {
+    return FfiConverterTypePaceRange.lower(value)
 }
 
 
@@ -1529,23 +1669,23 @@ fileprivate struct FfiConverterSequenceTypeIntervalStep: FfiConverterRustBuffer 
 #if swift(>=5.8)
 @_documentation(visibility: private)
 #endif
-fileprivate struct FfiConverterDictionaryTypeHeartRateZoneTypePace: FfiConverterRustBuffer {
-    public static func write(_ value: [HeartRateZone: Pace], into buf: inout [UInt8]) {
+fileprivate struct FfiConverterDictionaryTypeHeartRateZoneTypePaceRange: FfiConverterRustBuffer {
+    public static func write(_ value: [HeartRateZone: PaceRange], into buf: inout [UInt8]) {
         let len = Int32(value.count)
         writeInt(&buf, len)
         for (key, value) in value {
             FfiConverterTypeHeartRateZone.write(key, into: &buf)
-            FfiConverterTypePace.write(value, into: &buf)
+            FfiConverterTypePaceRange.write(value, into: &buf)
         }
     }
 
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [HeartRateZone: Pace] {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [HeartRateZone: PaceRange] {
         let len: Int32 = try readInt(&buf)
-        var dict = [HeartRateZone: Pace]()
+        var dict = [HeartRateZone: PaceRange]()
         dict.reserveCapacity(Int(len))
         for _ in 0..<len {
             let key = try FfiConverterTypeHeartRateZone.read(from: &buf)
-            let value = try FfiConverterTypePace.read(from: &buf)
+            let value = try FfiConverterTypePaceRange.read(from: &buf)
             dict[key] = value
         }
         return dict

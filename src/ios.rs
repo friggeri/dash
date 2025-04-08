@@ -1,14 +1,14 @@
 #![cfg(feature = "ios")]
 
 use crate::models;
-use crate::parse_workout;
+use crate::parser::parse_workout;
 
 uniffi::setup_scaffolding!();
 
 #[derive(uniffi::Error, thiserror::Error, Debug)]
 #[uniffi(flat_error)]
 pub enum UniffiError {
-    #[error("Error: {0}")]
+    #[error("Parsing error: {0}")]
     Err(String),
 }
 

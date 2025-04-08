@@ -5,6 +5,9 @@ use serde::Serialize;
 #[cfg(feature = "wasm")]
 use tsify::Tsify;
 
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
+
 #[cfg(feature = "ios")]
 use uniffi;
 
@@ -77,7 +80,7 @@ pub enum HeartRateZone {
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 pub struct Pace {
-    pub time: u32, // Time in seconds
+    pub time: f64, // Time in seconds
     pub unit: LengthUnit,
 }
 
@@ -106,7 +109,23 @@ pub enum TimeUnit {
 #[derive(Serialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
+pub struct PaceRange {
+    min: Pace,
+    max: Pace,
+}
+
+#[derive(Serialize, Debug, Clone)]
+#[cfg_attr(feature = "ios", derive(uniffi::Record))]
+#[cfg_attr(feature = "wasm", derive(Tsify))]
 pub struct PaceMap {
-    zones: HashMap<HeartRateZone, Pace>,
+    zones: HashMap<HeartRateZone, PaceRange>,
     default: HeartRateZone,
+}
+
+#[derive(Serialize, Debug, Clone)]
+#[cfg_attr(feature = "ios", derive(uniffi::Record))]
+#[cfg_attr(feature = "wasm", derive(Tsify))]
+pub struct Mileage {
+    min: f64,
+    max: f64,
 }

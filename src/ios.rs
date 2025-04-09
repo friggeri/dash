@@ -12,11 +12,11 @@ pub enum UniffiError {
 }
 
 #[uniffi::export]
-pub fn parse(input: &str) -> Result<models::Workout, UniffiError> {
-    crate::parser::parse(input).map_err(|e| UniffiError::Err(e.to_string()))
+pub fn get_workout(input: &str) -> Result<models::Workout, UniffiError> {
+    crate::parser::parse_workout(input).map_err(|e| UniffiError::Err(e.to_string()))
 }
 
 #[uniffi::export]
-pub fn mileage(pace_map: &models::PaceMap, workout: &models::Workout) -> models::Mileage {
-    crate::mileage::mileage(pace_map, workout)
+pub fn get_mileage(pace_map: &models::PaceMap, workout: &models::Workout) -> models::Mileage {
+    crate::mileage::get_mileage(pace_map, workout)
 }

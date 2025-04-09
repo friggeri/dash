@@ -4,7 +4,7 @@ use wasm_bindgen_test::*;
 #[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout() {
     let input = "1 mile warmup + 3 x (0.5 miles @z3 + 1 mile recovery) + 0.5 miles cooldown";
-    let result = parse(input);
+    let result = parse_workout(input);
     assert!(result.is_ok());
 
     let workout = result.unwrap();
@@ -29,7 +29,7 @@ fn test_parse_workout() {
 #[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_without_warmup_cooldown() {
     let input = "3 x (0.5 miles @z3 + 1 mile recovery)";
-    let result = parse(input);
+    let result = parse_workout(input);
     assert!(result.is_ok());
 
     let workout = result.unwrap();
@@ -42,7 +42,7 @@ fn test_parse_workout_without_warmup_cooldown() {
 fn test_parse_workout_with_duration_goal() {
     let input =
         "30 minutes warmup + 3 x (5 minutes @z4 + 2 minutes recovery) + 15 minutes cooldown";
-    let result = parse(input);
+    let result = parse_workout(input);
     assert!(result.is_ok());
 
     let workout = result.unwrap();
@@ -59,7 +59,7 @@ fn test_parse_workout_with_duration_goal() {
 #[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_pace_threshold() {
     let input = "1 mile @7:30/mile";
-    let result = parse(input);
+    let result = parse_workout(input);
     assert!(result.is_ok());
 
     let workout = result.unwrap();
@@ -76,7 +76,7 @@ fn test_parse_workout_with_pace_threshold() {
 #[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_pace_range() {
     let input = "1 mile @7:30-8:00/mile";
-    let result = parse(input);
+    let result = parse_workout(input);
     assert!(result.is_ok());
 
     let workout = result.unwrap();
@@ -95,7 +95,7 @@ fn test_parse_workout_with_pace_range() {
 #[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_all_heart_rate_zones() {
     let input = "1 mile @z1 + 1 mile @z2 + 1 mile @z3 + 1 mile @z4 + 1 mile @z5";
-    let result = parse(input);
+    let result = parse_workout(input);
     assert!(result.is_ok());
 
     let workout = result.unwrap();
@@ -120,7 +120,7 @@ fn test_parse_workout_with_all_heart_rate_zones() {
 #[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_different_length_units() {
     let input = "1 mile + 1000 meters + 100 yards + 1000 feet + 1 kilometer";
-    let result = parse(input);
+    let result = parse_workout(input);
     assert!(result.is_ok());
 
     let workout = result.unwrap();
@@ -145,7 +145,7 @@ fn test_parse_workout_with_different_length_units() {
 #[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_different_time_units() {
     let input = "30 seconds + 5 minutes + 1 hour";
-    let result = parse(input);
+    let result = parse_workout(input);
     assert!(result.is_ok());
 
     let workout = result.unwrap();
@@ -164,7 +164,7 @@ fn test_parse_workout_with_different_time_units() {
 #[wasm_bindgen_test(unsupported = test)]
 fn test_parse_workout_with_multiple_intervals() {
     let input = "1 mile warmup + 3 x (0.5 miles @z3 + 1 mile recovery) + 2 x (1 mile @z4) + 0.5 miles cooldown";
-    let result = parse(input);
+    let result = parse_workout(input);
     assert!(result.is_ok());
 
     let workout = result.unwrap();
@@ -201,7 +201,7 @@ fn test_parse_workout_with_invalid_input() {
     ];
 
     for input in invalid_inputs {
-        let result = parse(input);
+        let result = parse_workout(input);
         assert!(result.is_err(), "Expected error for input: {}", input);
     }
 }

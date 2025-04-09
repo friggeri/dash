@@ -11,5 +11,5 @@ pub use ios::*;
 #[cfg(feature = "wasm")]
 mod wasm;
 
-pub use mileage::mileage;
-pub use parser::parse;
+pub use mileage::get_mileage;
+pub use parser::parse_workout;

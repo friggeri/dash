@@ -7,7 +7,7 @@ use crate::models::*;
 #[grammar = "dash.pest"]
 pub struct DashParser;
 
-pub fn parse(input: &str) -> Result<Workout, pest::error::Error<Rule>> {
+pub fn parse_workout(input: &str) -> Result<Workout, pest::error::Error<Rule>> {
     let pairs = DashParser::parse(Rule::workout, input)?;
 
     let mut warmup = None;

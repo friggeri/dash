@@ -84,7 +84,7 @@ fn test_empty_workout() {
         intervals: vec![],
         cooldown: None,
     };
-    let mileage = mileage(&PACE_MAP, &workout);
+    let mileage = get_mileage(&PACE_MAP, &workout);
     assert_eq!(mileage.min, 0.0);
     assert_eq!(mileage.max, 0.0);
 }
@@ -108,7 +108,7 @@ fn test_workout_with_warmup_and_cooldown() {
             alert: Some(Alert::HeartRate(HeartRateZone::Z1)),
         }),
     };
-    let mileage = mileage(&PACE_MAP, &workout);
+    let mileage = get_mileage(&PACE_MAP, &workout);
     // Z2 pace: 10-9 min/mile for 10 minutes = 1.0-1.11 miles
     // Z1 pace: 20-10 min/mile for 5 minutes = 0.25-0.5 miles
     println!("mileage: {:?}", mileage);
@@ -147,7 +147,7 @@ fn test_workout_with_intervals() {
         }],
         cooldown: None,
     };
-    let mileage = mileage(&PACE_MAP, &workout);
+    let mileage = get_mileage(&PACE_MAP, &workout);
     // Z5 pace: 6-5 min/mile for 1 minute, repeated 3 times = 0.5-0.6 miles
     // Z1 pace: 20-10 min/mile for 2 minutes, repeated 3 times = 0.3-0.6 miles
     assert!(mileage.min >= 0.8 && mileage.min <= 0.9);

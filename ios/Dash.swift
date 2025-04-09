@@ -1691,17 +1691,17 @@ fileprivate struct FfiConverterDictionaryTypeHeartRateZoneTypePaceRange: FfiConv
         return dict
     }
 }
-public func mileage(paceMap: PaceMap, workout: Workout) -> Mileage  {
+public func getMileage(paceMap: PaceMap, workout: Workout) -> Mileage  {
     return try!  FfiConverterTypeMileage_lift(try! rustCall() {
-    uniffi_dash_fn_func_mileage(
+    uniffi_dash_fn_func_get_mileage(
         FfiConverterTypePaceMap_lower(paceMap),
         FfiConverterTypeWorkout_lower(workout),$0
     )
 })
 }
-public func parse(input: String)throws  -> Workout  {
+public func getWorkout(input: String)throws  -> Workout  {
     return try  FfiConverterTypeWorkout_lift(try rustCallWithError(FfiConverterTypeUniffiError_lift) {
-    uniffi_dash_fn_func_parse(
+    uniffi_dash_fn_func_get_workout(
         FfiConverterString.lower(input),$0
     )
 })
@@ -1722,10 +1722,10 @@ private let initializationResult: InitializationResult = {
     if bindings_contract_version != scaffolding_contract_version {
         return InitializationResult.contractVersionMismatch
     }
-    if (uniffi_dash_checksum_func_mileage() != 12174) {
+    if (uniffi_dash_checksum_func_get_mileage() != 17246) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_dash_checksum_func_parse() != 35379) {
+    if (uniffi_dash_checksum_func_get_workout() != 12641) {
         return InitializationResult.apiChecksumMismatch
     }
 

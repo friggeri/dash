@@ -1,6 +1,6 @@
 use crate::models::*;
 
-pub fn mileage(pace_map: &PaceMap, workout: &Workout) -> Mileage {
+pub fn get_mileage(pace_map: &PaceMap, workout: &Workout) -> Mileage {
     let mut min = 0.0;
     let mut max = 0.0;
 

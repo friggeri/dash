@@ -251,6 +251,11 @@ typedef void (*UniffiForeignFutureCompleteVoid)(uint64_t, UniffiForeignFutureStr
     );
 
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_DASH_FN_FUNC_MILEAGE
+#define UNIFFI_FFIDEF_UNIFFI_DASH_FN_FUNC_MILEAGE
+RustBuffer uniffi_dash_fn_func_mileage(RustBuffer pace_map, RustBuffer workout, RustCallStatus *_Nonnull out_status
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_DASH_FN_FUNC_PARSE
 #define UNIFFI_FFIDEF_UNIFFI_DASH_FN_FUNC_PARSE
 RustBuffer uniffi_dash_fn_func_parse(RustBuffer input, RustCallStatus *_Nonnull out_status
@@ -534,6 +539,12 @@ void ffi_dash_rust_future_free_void(uint64_t handle
 #ifndef UNIFFI_FFIDEF_FFI_DASH_RUST_FUTURE_COMPLETE_VOID
 #define UNIFFI_FFIDEF_FFI_DASH_RUST_FUTURE_COMPLETE_VOID
 void ffi_dash_rust_future_complete_void(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_DASH_CHECKSUM_FUNC_MILEAGE
+#define UNIFFI_FFIDEF_UNIFFI_DASH_CHECKSUM_FUNC_MILEAGE
+uint16_t uniffi_dash_checksum_func_mileage(void
+    
 );
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_DASH_CHECKSUM_FUNC_PARSE

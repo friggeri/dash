@@ -1,7 +1,6 @@
 #![cfg(feature = "ios")]
 
 use crate::models;
-use crate::parser::parse_workout;
 
 uniffi::setup_scaffolding!();
 
@@ -14,5 +13,10 @@ pub enum UniffiError {
 
 #[uniffi::export]
 pub fn parse(input: &str) -> Result<models::Workout, UniffiError> {
-    parse_workout(input).map_err(|e| UniffiError::Err(e.to_string()))
+    crate::parser::parse(input).map_err(|e| UniffiError::Err(e.to_string()))
+}
+
+#[uniffi::export]
+pub fn mileage(pace_map: &models::PaceMap, workout: &models::Workout) -> models::Mileage {
+    crate::mileage::mileage(pace_map, workout)
 }

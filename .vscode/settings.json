@@ -13,5 +13,5 @@
   "coverage-gutters.highlightdark": "rgba(45, 121, 10, 0.2)",
   "coverage-gutters.noHighlightDark": "rgba(121, 31, 10, 0.2)",
   "coverage-gutters.partialHighlightDark": "rgba(121, 86, 10, 0.2)",
-  "rust-analyzer.cargo.features": ["ios"]
+  "rust-analyzer.cargo.features": ["wasm"]
 }

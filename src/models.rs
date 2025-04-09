@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "wasm")]
 use tsify::Tsify;
@@ -11,17 +11,18 @@ use wasm_bindgen::prelude::*;
 #[cfg(feature = "ios")]
 use uniffi;
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 #[cfg_attr(feature = "wasm", tsify(into_wasm_abi))]
+#[cfg_attr(feature = "wasm", tsify(from_wasm_abi))]
 pub struct Workout {
     pub warmup: Option<WorkoutStep>,
     pub intervals: Vec<IntervalBlock>,
     pub cooldown: Option<WorkoutStep>,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 pub struct IntervalBlock {
@@ -29,7 +30,7 @@ pub struct IntervalBlock {
     pub steps: Vec<IntervalStep>,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 pub struct IntervalStep {
@@ -37,7 +38,7 @@ pub struct IntervalStep {
     pub has_recovery: bool,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 pub struct WorkoutStep {
@@ -45,7 +46,7 @@ pub struct WorkoutStep {
     pub alert: Option<Alert>,
 }
 
-#[derive(Serialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 #[serde(tag = "type", rename_all = "camelCase")]
@@ -54,7 +55,7 @@ pub enum Goal {
     Duration { value: f64, unit: TimeUnit },
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 #[serde(tag = "type", rename_all = "camelCase")]
@@ -64,7 +65,7 @@ pub enum Alert {
     PaceRange { min: Pace, max: Pace },
 }
 
-#[derive(Serialize, Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 #[serde(rename_all = "camelCase")]
@@ -76,7 +77,7 @@ pub enum HeartRateZone {
     Z5,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 pub struct Pace {
@@ -84,7 +85,7 @@ pub struct Pace {
     pub unit: LengthUnit,
 }
 
-#[derive(Serialize, Debug, Copy, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 #[serde(rename_all = "camelCase")]
@@ -96,7 +97,7 @@ pub enum LengthUnit {
     Kilometers,
 }
 
-#[derive(Serialize, Debug, Copy, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]
 #[cfg_attr(feature = "ios", derive(uniffi::Enum))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 #[serde(rename_all = "camelCase")]
@@ -106,26 +107,28 @@ pub enum TimeUnit {
     Hours,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
 pub struct PaceRange {
-    min: Pace,
-    max: Pace,
+    pub min: Pace,
+    pub max: Pace,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
+#[cfg_attr(feature = "wasm", tsify(from_wasm_abi))]
 pub struct PaceMap {
-    zones: HashMap<HeartRateZone, PaceRange>,
-    default: HeartRateZone,
+    pub zones: HashMap<HeartRateZone, PaceRange>,
+    pub default: HeartRateZone,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "ios", derive(uniffi::Record))]
 #[cfg_attr(feature = "wasm", derive(Tsify))]
+#[cfg_attr(feature = "wasm", tsify(into_wasm_abi))]
 pub struct Mileage {
-    min: f64,
-    max: f64,
+    pub min: f64,
+    pub max: f64,
 }
